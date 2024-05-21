@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  koshelektesttask.api:
+    image: ${DOCKER_REGISTRY-}koshelektesttaskapi
+    build:
+      context: .
+      dockerfile: KoshelekTestTask.Api/Dockerfile
+
+  koshelektesttask.client:
+    image: ${DOCKER_REGISTRY-}koshelektesttaskclient
+    build:
+      context: .
+      dockerfile: KoshelekTestTask.Client/Dockerfile
+
