@@ -2,7 +2,7 @@
 
 namespace KoshelekTestTask.Core.Entities
 {
-    public class MessageToPost:BaseMessage
+    public class MessageToPost : BaseMessage
     {
     }
 }
