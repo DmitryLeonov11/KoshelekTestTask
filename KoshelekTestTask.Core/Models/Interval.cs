@@ -2,7 +2,7 @@
 {
     public class Interval
     {
-        public DateTime Begining { get; set; }
+        public DateTime Beginning { get; set; }
         public DateTime End { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using Npgsql;
 
 namespace KoshelekTestTask.Infrastructure.Data
 {
-    public class MessageService : IMessgaeService
+    public class MessageService : IMessageService
     {
         private static readonly string ConnectionString =
             $"Host={Environment.GetEnvironmentVariable("POSTGRES_HOST")};" +
@@ -22,13 +22,13 @@ namespace KoshelekTestTask.Infrastructure.Data
             {
                 Connection = connection,
                 CommandText =
-                    $"INSERT INTO koshelek (serial_number, text, time_of_sending) VALUES ({message.Id}, '{message.Text}', '{message.TimeOfSending.ToUniversalTime():O}'::timestamp);"
+                    $"INSERT INTO koshelek (serial_number, text, time_of_sending) VALUES ({message.SerialNumber}, '{message.Text}', '{message.TimeOfSending.ToUniversalTime():O}'::timestamp);"
             };
 
             command.ExecuteNonQuery();
         }
 
-        public async Task<List<Message>> FindMessageOverPeriodOfTimeAsync(Interval interval)
+        public async Task<List<Message>> FindMessagesOverPeriodOfTimeAsync(Interval interval)
         {
             await using var connection = new NpgsqlConnection(ConnectionString);
             connection.Open();
@@ -38,7 +38,7 @@ namespace KoshelekTestTask.Infrastructure.Data
                 Connection = connection,
                 CommandText =
                     "SELECT serial_number, text, time_of_sending FROM koshelek " +
-                    $"WHERE time_of_sending BETWEEN '{interval.Begining.ToUniversalTime():O}'::timestamp AND '{interval.End.ToUniversalTime():O}'::timestamp;"
+                    $"WHERE time_of_sending BETWEEN '{interval.Beginning.ToUniversalTime():O}'::timestamp AND '{interval.End.ToUniversalTime():O}'::timestamp;"
             };
 
             await using var dataReader = await command.ExecuteReaderAsync();
@@ -46,7 +46,7 @@ namespace KoshelekTestTask.Infrastructure.Data
             while (dataReader.Read())
                 messages.Add(new Message
                 {
-                    Id = dataReader.GetInt32(0),
+                    SerialNumber = dataReader.GetInt32(0),
                     Text = dataReader.GetString(1),
                     TimeOfSending = (DateTime)dataReader.GetDateTime(2)
                 });

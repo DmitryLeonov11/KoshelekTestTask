@@ -9,14 +9,14 @@ namespace KoshelekTestTask.Infrastructure
     {
         private readonly IHubContext<MessageHub> _hubContext;
 
-        public MessageDispatcher (IHubContext<MessageHub> hubContext)
+        public MessageDispatcher(IHubContext<MessageHub> hubContext)
         {
             _hubContext = hubContext;
         }
 
         public async Task SendMessageToAllUsers(Message message)
         {
-            await _hubContext.Clients.All.SendAsync("ReceiveMessage", message.Id, message.Text,
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", message.SerialNumber, message.Text,
                 message.TimeOfSending);
         }
     }

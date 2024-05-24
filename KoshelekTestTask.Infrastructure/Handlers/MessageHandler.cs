@@ -25,7 +25,7 @@ namespace KoshelekTestTask.Infrastructure.Handlers
                 return false;
             }
 
-            if (message.Id <= 0)
+            if (message.SerialNumber <= 0)
             {
                 error = "The message serial number must be greater than 0.";
                 return false;
