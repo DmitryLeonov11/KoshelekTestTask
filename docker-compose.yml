@@ -5,8 +5,8 @@ x-common-variables: &common-variables
 
 services:
   api:
-    image: koshelektesttask-api
-    container_name: KoshelekTestTask-Api
+    image: dmitryleonov/koshelektesttaskapi
+    container_name: KoshelekTestTaskApi
     environment:
       <<: *common-variables
       POSTGRES_HOST: postgres
@@ -22,8 +22,8 @@ services:
       - seq
 
   client:
-    image: koshelektesttask-client
-    container_name: KoshelekTestTask-Client
+    image: dmitryleonov/koshelektesttaskclient
+    container_name: KoshelekTestTaskClient
     ports:
       - 82:80
     restart: unless-stopped
@@ -33,7 +33,7 @@ services:
       
   seq:
     image: datalust/seq
-    container_name: KoshelekTestTask-Seq
+    container_name: KoshelekTestTaskSeq
     environment:
       - ACCEPT_EULA=Y
     ports:
@@ -41,8 +41,8 @@ services:
     restart: unless-stopped
       
   postgres:
-    image: koshelektesttask-postgres
-    container_name: KoshelekTestTask-PostgreSQL
+    image: dmitryleonov/koshelektesttaskpostgres
+    container_name: KoshelekTestTaskPostgreSQL
     environment: *common-variables
     ports:
       - 5432:5432
